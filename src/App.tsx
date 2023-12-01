@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import {  useRef, useEffect } from 'react'
 import EducationCourse from './components/education-course'
 import Experience from './components/experience'
 import Introduction from './components/introduction'
@@ -6,7 +6,7 @@ import Learning from './components/learning'
 import MyProject from './components/my-project'
 import SocialSideBar from './components/social-side-bar'
 import { flutterimg, postgresql, todoimg } from './data/config'
-import useScrollSpy from './hook/menu'
+import useScrollSpy from './hook/menu.ts'
 
 function App() {
 
@@ -27,11 +27,36 @@ function App() {
     { url: "https://github.com/melikeozlen", icon: "fa-solid fa-angles-right", title: "GITHUB", subtile: "PROFILE", content: ["MORE..."], color: "orange" }
   ];
 
-  const [activeTab, setActiveTab] = useState(0)
+  useEffect(() => {
+    function update(e: MouseEvent | TouchEvent) {
+      var x = 0;
+      var y = 0;
+  
+      if (e instanceof TouchEvent) {
+        x = e.touches[0]?.clientX || 0;
+        y = e.touches[0]?.clientY || 0;
+      } else {
+        x = e.clientX || 0;
+        y = e.clientY || 0;
+      }
+  
+      document.documentElement.style.setProperty('--cursorX', x + 'px');
+      document.documentElement.style.setProperty('--cursorY', y + 'px');
+    }
+  
+    document.addEventListener('mousemove', update);
+    document.addEventListener('touchmove', update);
+  
+    return () => {
+      document.removeEventListener('mousemove', update);
+      document.removeEventListener('touchmove', update);
+    };
+  }, []);
 
   return (
     <main>
-      <SocialSideBar activeSection={activeSection} setActiveTab={setActiveTab} activeTab={activeTab} />
+
+      <SocialSideBar activeSection={activeSection} />
 
       <div id='introduction' className={activeSection == "" ? 'active page Home-p' : 'page Home-p'} ref={section1Ref} style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: "50px" }}>
         <Introduction />
@@ -52,9 +77,9 @@ function App() {
       <br />
       <div id='myWork' className='page MyWork-p' ref={section4Ref} style={{ position: "relative", zIndex: "1", height: "100vh", display: "flex", flexDirection: "column", justifyContent: "center" }}>
         <br />
-      
 
-        <h1 className='name-title' style={{marginTop:"110px"}}>MY WORK</h1>
+
+        <h1 className='name-title' style={{ marginTop: "110px" }}>MY WORK</h1>
         <div className='card-type-two-provider'>
           {data.map((item, index) => (
             <MyProject key={index} {...item} />
@@ -63,7 +88,6 @@ function App() {
         </div>
         <img style={{ position: "absolute", top: "60px", zIndex: "-1", opacity: "0.2" }} width={"500"} height={"auto"} src="https://tamalsen.dev/wp-content/uploads/2021/12/hello-world-html-code-768x384.png"></img>
       </div>
-
     </main>
   )
 }

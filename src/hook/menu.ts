@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, RefObject } from 'react';
 
-const useScrollSpy = (sectionRefs) => {
+const useScrollSpy = (sectionRefs: RefObject<HTMLElement>[]) => {
     const [activeSection, setActiveSection] = useState("introduction");
 
     useEffect(() => {
@@ -24,7 +24,7 @@ const useScrollSpy = (sectionRefs) => {
             window.removeEventListener('scroll', handleScroll);
         };
     }, [sectionRefs]);
-
+ 
     return activeSection;
 };
 

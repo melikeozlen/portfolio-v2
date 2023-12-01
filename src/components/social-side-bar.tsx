@@ -1,12 +1,10 @@
 import { FC } from "react";
 
 interface SocialSideBarProps {
-    setActiveTab: (tab: number) => void;
-    activeTab: number;
     activeSection: string;
 }
 
-const SocialSideBar: FC<SocialSideBarProps> = ({ setActiveTab, activeTab, activeSection }) => {
+const SocialSideBar: FC<SocialSideBarProps> = ({ activeSection }) => {
     return (
         <>
             <div id='social-side-bar'>
