@@ -173,7 +173,7 @@ navbar {
   width: 50%;
 }
 
-.name-title::before {
+/* .name-title::before {
   position: absolute;
   content: "";
   width: 55px;
@@ -182,7 +182,7 @@ navbar {
   left: -45px;
   z-index: -1;
   background-color: var(--light-green);
-}
+} */
 
 .introduction {
   width: 100% !important;
